@@ -4,63 +4,57 @@ import "components/Application.scss";
 import DayList from "./DayList";
 import { useState } from "react";
 import Appointment from "./Appointment";
-import "components/Appointment/styles.scss"
-
-
-const appointments = {
-  "1": {
-    id: 1,
-    time: "12pm",
-  },
-  "2": {
-    id: 2,
-    time: "1pm",
-    interview: {
-      student: "Lydia Miller-Jones",
-      interviewer:{
-        id: 3,
-        name: "Sylvia Palmer",
-        avatar: "https://i.imgur.com/LpaY82x.png",
-      }
-    }
-  },
-  "3": {
-    id: 3,
-    time: "2pm",
-  },
-  "4": {
-    id: 4,
-    time: "3pm",
-    interview: {
-      student: "Archie Andrews",
-      interviewer:{
-        id: 4,
-        name: "Cohana Roy",
-        avatar: "https://i.imgur.com/FK8V841.jpg",
-      }
-    }
-  },
-  "5": {
-    id: 5,
-    time: "4pm",
-  }
-};
-
+import "components/Appointment/styles.scss";
+import { getAppointmentsForDay } from "helpers/selectors";
 
 export default function Application(props) {
-  const [day, setDay] = useState('Monday');
-  const [days, setDays] = useState([]);
+  // const setDays = (days) => setState(prev => ({...prev, days}));
 
-  const getDaysFromApi = async () => {
-    const {data} = await axios.get('/api/days');
-    return data;
-  };
+  const [state, setState] = useState({
+    day: "Monday",
+    days: [],
+    // you may put the line below, but will have to remove/comment hardcoded appointments variable
+    appointments: {},
+  });
+
+  const setDay = (day) => setState({ ...state, day });
+  const dailyAppointments = getAppointmentsForDay(state, state.day);
+
+  // const getDaysFromApi = async () => {
+  //   const {data} = await axios.get('/api/days')
+  //   return data;
+  // };
+
+  // useEffect(() => {
+  //   getDaysFromApi()
+  //   .then(appointments.setdays)
+  //   .catch(console.error)
+  // }, []);
 
   useEffect(() => {
-    getDaysFromApi()
-    .then(setDays)
-    .catch(console.error)
-  }, []); 
+    Promise.all([
+      axios.get("http://localhost:8001/api/days"),
+      axios.get("http://localhost:8001/api/appointments"),
+      axios.get("http://localhost:8001/api/interviewers"),
+    ]).then((all) => {
+      setState((prev) => ({
+        ...prev,
+        days: all[0].data,
+        appointments: all[1].data,
+        interviewers: all[2].data,
+      }));
+    });
+  }, []);
+  //   axios.get("/api/days", "/api/appointments").then(response => setState(response.data));
+
+  // }, []);
+
+  // Promise.all([
+  //   Promise.resolve('http://localhost:8001/api/days,'),
+  //   Promise.resolve('http://localhost:8001/api/appointments,'),
+  //   Promise.resolve('http://localhost:8001/api/interviewers'),
+  // ]).then((all) => {
+  //   setState(prev => ({...prev, days: all[0], appointments: all[1], interviewers: all[2] }));  });
 
   return (
     <main className="layout">
@@ -72,11 +66,7 @@ export default function Application(props) {
         />
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
-          <DayList
-            days={days}
-            value={day}
-            onChange={setDay}
-          />
+          <DayList days={state.days} value={state.day} onChange={setDay} />
         </nav>
         <img
           className="sidebar__lhl sidebar--centered"
@@ -86,12 +76,9 @@ export default function Application(props) {
       </section>
       <section className="schedule">
         <Fragment>
-          {Object.values(appointments).map(appointment =>
-              <Appointment 
-                key={appointment.id}                   
-                {...appointment}  
-              />
-          )}
+          {dailyAppointments.map((appointment) => (
+            <Appointment key={appointment.id} {...appointment} />
+          ))}
           <Appointment key="last" time="5pm" />
         </Fragment>
       </section>
