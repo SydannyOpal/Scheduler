@@ -7,6 +7,15 @@ export function getAppointmentsForDay({days, appointments}, dayName) {
   return appointmentsForDay;
 }
 
+export function getInterviewersForDay({days, interviewers}, dayName) {
+  const day = days.find(day => day.name === dayName);
+
+  if (!day) return [];
+
+  const interviewersForDay = day.interviewers.map(id => interviewers[`${id}`]);
+  return interviewersForDay;
+}
+
 export function getInterview({interviewers}, interview) {
   if (!interview) return null;
   
