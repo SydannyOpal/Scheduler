@@ -5,31 +5,33 @@ import DayList from "./DayList";
 import { useState } from "react";
 import Appointment from "./Appointment";
 import "components/Appointment/styles.scss";
-import { getAppointmentsForDay } from "helpers/selectors";
+import { getAppointmentsForDay, getInterview } from "helpers/selectors";
+
 
 export default function Application(props) {
-  // const setDays = (days) => setState(prev => ({...prev, days}));
 
   const [state, setState] = useState({
     day: "Monday",
     days: [],
-    // you may put the line below, but will have to remove/comment hardcoded appointments variable
     appointments: {},
+    interviewers: {},
   });
 
   const setDay = (day) => setState({ ...state, day });
   const dailyAppointments = getAppointmentsForDay(state, state.day);
 
-  // const getDaysFromApi = async () => {
-  //   const {data} = await axios.get('/api/days')
-  //   return data;
-  // };
-
-  // useEffect(() => {
-  //   getDaysFromApi()
-  //   .then(appointments.setdays)
-  //   .catch(console.error)
-  // }, []);
+  const schedule = dailyAppointments.map((appointment) => {
+    const interview = getInterview(state, appointment.interview);
+  
+    return (
+      <Appointment
+        key={appointment.id}
+        id={appointment.id}
+        time={appointment.time}
+        interview={interview}
+      />
+    );
+  });
 
   useEffect(() => {
     Promise.all([
@@ -45,16 +47,6 @@ export default function Application(props) {
       }));
     });
   }, []);
-  //   axios.get("/api/days", "/api/appointments").then(response => setState(response.data));
-
-  // }, []);
-
-  // Promise.all([
-  //   Promise.resolve('http://localhost:8001/api/days,'),
-  //   Promise.resolve('http://localhost:8001/api/appointments,'),
-  //   Promise.resolve('http://localhost:8001/api/interviewers'),
-  // ]).then((all) => {
-  //   setState(prev => ({...prev, days: all[0], appointments: all[1], interviewers: all[2] }));  });
 
   return (
     <main className="layout">
@@ -76,9 +68,7 @@ export default function Application(props) {
       </section>
       <section className="schedule">
         <Fragment>
-          {dailyAppointments.map((appointment) => (
-            <Appointment key={appointment.id} {...appointment} />
-          ))}
+          {schedule}
           <Appointment key="last" time="5pm" />
         </Fragment>
       </section>

@@ -4,5 +4,14 @@ export function getAppointmentsForDay({days, appointments}, dayName) {
   if (!day) return [];
 
   const appointmentsForDay = day.appointments.map(id => appointments[`${id}`]);
-  return appointmentsForDay ;
+  return appointmentsForDay;
+}
+
+export function getInterview({interviewers}, interview) {
+  if (!interview) return null;
+  
+  const {interviewer: interviewerId} = interview;
+  const interviewer =  interviewers[`${interviewerId}`];
+  
+  return {...interview, interviewer}
 }

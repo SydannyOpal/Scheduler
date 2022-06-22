@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "components/Appointment/styles.scss"
 import InterviewerList from "components/InterviewerList";
 import Button from "components/Button";
-import {interviewers} from "../../../stories";
 
 export default function Form ({
   student: defaultStudent,
