@@ -3,6 +3,7 @@ import Header from "./Header";
 import Show from "./Show";
 import Empty from "./Empty";
 import Confirm from "./Confirm";
+import Error from "./Error";
 import useVisualMode from "hooks/useVisualMode";
 import Form from "./Form";
 import Status from "./Status";
@@ -15,6 +16,8 @@ const SAVING = "SAVING";
 const DELETING = "DELETING";
 const CONFIRM = "CONFIRM";
 const EDIT = "EDIT";
+const ERROR_SAVE = "ERROR_SAVE"
+const ERROR_DELETE = "ERROR_DELETE";
 
 export default function Appointment({
   id,
@@ -33,15 +36,19 @@ export default function Appointment({
     };
 
     transition(SAVING);
-    bookInterview(id, interview).then(() => transition(SHOW));
+    bookInterview(id, interview)
+      .then(() => transition(SHOW))
+      .catch(() => transition(ERROR_SAVE, true));
   };
 
   const cancelAppointment = () => transition(CONFIRM);
   const editAppointment = () => transition(EDIT);
 
   const confirmAppointmentDelete = () => {
-    transition(DELETING);
-    cancelInterview(id).then(() => transition(EMPTY));
+    transition(DELETING, true);
+    cancelInterview(id)
+    .then(() => transition(EMPTY))
+    .catch(() => transition(ERROR_DELETE, true));
   };
 
   return (
@@ -77,6 +84,15 @@ export default function Appointment({
         onCancel={back}
         onConfirm={confirmAppointmentDelete}
       /> }
+      {mode === ERROR_SAVE && <Error
+        message="Could not save appointment"
+        onCancel={back}
+      /> }
+      {mode === ERROR_DELETE && <Error
+        message="Could not delete appointment"
+        onCancel={back}
+      /> }
+
       {mode === SAVING && <Status status="Saving" />}
       {mode === DELETING && <Status status="Deleting" />}
     </article>
