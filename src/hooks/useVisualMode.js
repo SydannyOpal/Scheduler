@@ -1,4 +1,3 @@
-import DayList from "components/DayList";
 import { useState } from "react";
 
 export default function useVisualMode(initialMode) {
@@ -8,13 +7,23 @@ export default function useVisualMode(initialMode) {
   const transition = (newMode, shouldReplaceCurrentMode = false) => {
     setMode(newMode);
 
-    if(shouldReplaceCurrentMode) {
-      history[history.length - 1] = newMode;
-    } else {
-      history.push(newMode);
-    }
+    // if(shouldReplaceCurrentMode) {
+    //   history[history.length - 1] = newMode;
+    // } else {
+    //   history.push(newMode);
+    // }
 
-    setHistory([...history]);
+    // setHistory([...history]);
+    // Whats the difference between these two?
+
+    if(shouldReplaceCurrentMode) {
+      setHistory((history) => {
+        history[history.length - 1] = newMode;
+        return [...history];
+      })
+    } else {
+      setHistory([...history, newMode]);
+    }
   };
 
   const back = () => {
