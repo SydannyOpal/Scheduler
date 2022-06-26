@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { getAppointmentsForDay } from "helpers/selectors";
 
 export default function useApplicationData() {
   const [state, setState] = useState({
@@ -12,9 +11,9 @@ export default function useApplicationData() {
 
   useEffect(() => {
     Promise.all([
-      axios.get("http://localhost:8001/api/days"),
-      axios.get("http://localhost:8001/api/appointments"),
-      axios.get("http://localhost:8001/api/interviewers"),
+      axios.get("/api/days"),
+      axios.get("/api/appointments"),
+      axios.get("/api/interviewers"),
     ]).then((all) => {
       setState((prev) => ({
         ...prev,
@@ -48,7 +47,7 @@ export default function useApplicationData() {
 
     return axios
       .put(`/api/appointments/${appointmentId}`, { interview })
-      .then((response) => {
+      .then(() => {
         updateSpots(appointmentId, false);
         setState({ ...state, appointments, days: [...state.days] });
       });
@@ -64,7 +63,7 @@ export default function useApplicationData() {
 
     return axios
       .delete(`/api/appointments/${appointmentId}`)
-      .then((response) => {
+      .then(() => {
         updateSpots(appointmentId, true);
         setState({ ...state, appointments, days: [...state.days] });
       });
