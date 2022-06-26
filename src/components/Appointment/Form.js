@@ -3,12 +3,12 @@ import "components/Appointment/styles.scss"
 import InterviewerList from "components/InterviewerList";
 import Button from "components/Button";
 
-export default function Form ({
+export default function Form({
   studentName: defaultStudentName,
   interviewerId: defaultInterviewerId,
   interviewers,
   onSave,
-  onCancel
+  onCancel,
 }) {
   const [studentName, setStudentName] = useState(defaultStudentName || "");
   const [interviewerId, setInterviewerId] = useState(defaultInterviewerId || null);
@@ -19,14 +19,14 @@ export default function Form ({
   }
 
   const cancel = () => {
-    reset(); 
+    reset();
     onCancel();
   }
 
   return (
     <main className="appointment__card appointment__card--create">
       <section className="appointment__card-left">
-        <form autoComplete="off" onSubmit={e => e.preventDefault()}>
+        <form autoComplete="off" onSubmit={(e) => e.preventDefault()}>
           <input
             className="appointment__create-input text--semi-bold"
             value={studentName}
@@ -43,10 +43,14 @@ export default function Form ({
       </section>
       <section className="appointment__card-right">
         <section className="appointment__actions">
-          <Button danger onClick={cancel}>Cancel</Button>
-          <Button confirm onClick={() => onSave(studentName, interviewerId)}>Save</Button>
+          <Button danger onClick={cancel}>
+            Cancel
+          </Button>
+          <Button confirm onClick={validate}>
+            Save
+          </Button>
         </section>
       </section>
     </main>
-  )
+  );
 }
