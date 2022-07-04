@@ -7,15 +7,6 @@ export default function useVisualMode(initialMode) {
   const transition = (newMode, shouldReplaceCurrentMode = false) => {
     setMode(newMode);
 
-    // if(shouldReplaceCurrentMode) {
-    //   history[history.length - 1] = newMode;
-    // } else {
-    //   history.push(newMode);
-    // }
-
-    // setHistory([...history]);
-    // Whats the difference between these two?
-
     if(shouldReplaceCurrentMode) {
       setHistory((history) => {
         history[history.length - 1] = newMode;
@@ -29,9 +20,9 @@ export default function useVisualMode(initialMode) {
   const back = () => {
     if (history.length === 1) return;
 
-    history.pop();
-    setMode(history[history.length - 1]);
-    setHistory([...history]);
+    const newHistory = [...history].pop();
+    setMode(newHistory[newHistory.length - 1]);
+    setHistory(newHistory);
   };
 
   return {mode, transition, back};

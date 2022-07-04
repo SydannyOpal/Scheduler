@@ -141,7 +141,6 @@ storiesOf("InterviewerListItem", module)
       />
     ));
 
-
     storiesOf("Appointment", module)
     .addParameters({
       backgrounds: [{ name: "white", value: "#fff", default: true }]

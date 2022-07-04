@@ -24,15 +24,13 @@ export default function useApplicationData() {
     });
   }, []);
 
-  const updateSpots = (apptId, shouldAddSpots) => {
-    // const daysWithAppointment = state.days.filter(day => day.appointments.includes(apptId));
-    const day = state.days.find((day) => day.appointments.includes(apptId));
-    day.spots += shouldAddSpots ? 1 : -1;
-
-    // for (let day of daysWithAppointment){
-    //   day.spots += shouldAddSpots ? 1 : -1;
-    // }
-  };
+const updateSpots = (appointments) => {
+ const selectedDay = state.days.find(day => day.name === state.day)
+ const appointmentSlots = selectedDay.appointments.map(appointmentId => appointments[appointmentId].interview)
+ const spotsRemaining = appointmentSlots.filter(appointment => appointment === null).length
+ console.log(spotsRemaining);
+ selectedDay.spots = spotsRemaining;
+}
 
   const bookInterview = (appointmentId, interview) => {
     const appointment = {
@@ -48,7 +46,7 @@ export default function useApplicationData() {
     return axios
       .put(`/api/appointments/${appointmentId}`, { interview })
       .then(() => {
-        updateSpots(appointmentId, false);
+        updateSpots(appointments);
         setState({ ...state, appointments, days: [...state.days] });
       });
   };
@@ -64,7 +62,7 @@ export default function useApplicationData() {
     return axios
       .delete(`/api/appointments/${appointmentId}`)
       .then(() => {
-        updateSpots(appointmentId, true);
+        updateSpots(appointments);
         setState({ ...state, appointments, days: [...state.days] });
       });
   };

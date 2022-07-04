@@ -7,7 +7,6 @@ import useApplicationData from "hooks/useApplicationData";
 import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
 import "components/Appointment/styles.scss";
 
-
 export default function Application(props) {
   const {
     state, 

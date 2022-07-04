@@ -2,13 +2,14 @@ import React from "react";
 import "components/Appointment/styles.scss";
 
 export default function Show({ student, interviewer, onCancel, onEdit }) {
+  const interviewerName = interviewer ? interviewer.name : '';
   return (
     <main className="appointment__card appointment__card--show">
       <section className="appointment__card-left">
         <h2 className="text--regular">{student}</h2>
         <section className="interviewer">
           <h4 className="text--light">Interviewer</h4>
-          <h3 className="text--regular">{interviewer.name}</h3>
+          <h3 className="text--regular">{interviewerName}</h3>
         </section>
       </section>
       <section className="appointment__card-right">
@@ -16,13 +17,13 @@ export default function Show({ student, interviewer, onCancel, onEdit }) {
           <img
             className="appointment__actions-button"
             src="images/edit.png"
-            onClick={() => onEdit(interviewer.name)}
+            onClick={() => onEdit(interviewerName)}
             alt="Edit"
           />
           <img
             className="appointment__actions-button"
             src="images/trash.png"
-            onClick={() => onCancel(interviewer.name)}
+            onClick={() => onCancel(interviewerName)}
             alt="Delete"
           />
         </section>
