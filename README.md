@@ -22,8 +22,8 @@ npm test
 npm run storybook
 ```
 ## Preview
-![The Scheduler Show Page](link)
-![The Appointment Form](link)
+![The Scheduler Show Page](https://github.com/SydannyOpal/Scheduler/blob/master/public/images/Scheduler%20Show%20Page.png?raw=true)
+![The Appointment Form](https://github.com/SydannyOpal/Scheduler/blob/master/public/images/Scheduler%20Appointment%20Form.png?raw=true)
 
 
 
