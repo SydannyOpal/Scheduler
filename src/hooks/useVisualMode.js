@@ -17,10 +17,12 @@ export default function useVisualMode(initialMode) {
     }
   };
 
+// to insure that state is saved when editing 
   const back = () => {
     if (history.length === 1) return;
 
-    const newHistory = [...history].pop();
+    const newHistory = [...history];
+    newHistory.pop();
     setMode(newHistory[newHistory.length - 1]);
     setHistory(newHistory);
   };

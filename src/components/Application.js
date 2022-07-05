@@ -1,25 +1,24 @@
-import React, { Fragment, useEffect } from "react";
-import axios from "axios";
+import React, { Fragment } from "react";
 import "components/Application.scss";
 import DayList from "./DayList";
 import Appointment from "./Appointment";
 import useApplicationData from "hooks/useApplicationData";
-import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
+import {
+  getAppointmentsForDay,
+  getInterview,
+  getInterviewersForDay,
+} from "helpers/selectors";
 import "components/Appointment/styles.scss";
 
 export default function Application(props) {
-  const {
-    state, 
-    setDay, 
-    bookInterview, 
-    cancelInterview
-  } = useApplicationData();
+  const { state, setDay, bookInterview, cancelInterview } =
+    useApplicationData();
   const dailyAppointments = getAppointmentsForDay(state, state.day);
   const dailyInterviewers = getInterviewersForDay(state, state.day);
 
   const schedule = dailyAppointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
-  
+
     return (
       <Appointment
         key={appointment.id}
@@ -32,7 +31,6 @@ export default function Application(props) {
       />
     );
   });
-
 
   return (
     <main className="layout">

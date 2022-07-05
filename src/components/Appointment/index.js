@@ -16,7 +16,7 @@ const SAVING = "SAVING";
 const DELETING = "DELETING";
 const CONFIRM = "CONFIRM";
 const EDIT = "EDIT";
-const ERROR_SAVE = "ERROR_SAVE"
+const ERROR_SAVE = "ERROR_SAVE";
 const ERROR_DELETE = "ERROR_DELETE";
 
 export default function Appointment({
@@ -47,8 +47,8 @@ export default function Appointment({
   const confirmAppointmentDelete = () => {
     transition(DELETING, true);
     cancelInterview(id)
-    .then(() => transition(EMPTY))
-    .catch(() => transition(ERROR_DELETE, true));
+      .then(() => transition(EMPTY))
+      .catch(() => transition(ERROR_DELETE, true));
   };
 
   return (
@@ -76,22 +76,19 @@ export default function Appointment({
           interviewerId={interview.interviewer.id}
           interviewers={interviewers}
           onSave={save}
-          onCancel={() => back()}
+          onCancel={back}
         />
       )}
 
-      {mode === CONFIRM && <Confirm 
-        onCancel={back}
-        onConfirm={confirmAppointmentDelete}
-      /> }
-      {mode === ERROR_SAVE && <Error
-        message="Could not save appointment"
-        onCancel={back}
-      /> }
-      {mode === ERROR_DELETE && <Error
-        message="Could not delete appointment"
-        onCancel={back}
-      /> }
+      {mode === CONFIRM && (
+        <Confirm onCancel={back} onConfirm={confirmAppointmentDelete} />
+      )}
+      {mode === ERROR_SAVE && (
+        <Error message="Could not save appointment" onCancel={back} />
+      )}
+      {mode === ERROR_DELETE && (
+        <Error message="Could not delete appointment" onCancel={back} />
+      )}
 
       {mode === SAVING && <Status status="Saving" />}
       {mode === DELETING && <Status status="Deleting" />}

@@ -28,7 +28,6 @@ const updateSpots = (appointments) => {
  const selectedDay = state.days.find(day => day.name === state.day)
  const appointmentSlots = selectedDay.appointments.map(appointmentId => appointments[appointmentId].interview)
  const spotsRemaining = appointmentSlots.filter(appointment => appointment === null).length
- console.log(spotsRemaining);
  selectedDay.spots = spotsRemaining;
 }
 

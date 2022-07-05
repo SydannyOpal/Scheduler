@@ -2,7 +2,7 @@ import React from "react";
 import "components/Appointment/styles.scss";
 
 export default function Show({ student, interviewer, onCancel, onEdit }) {
-  const interviewerName = interviewer ? interviewer.name : '';
+  const interviewerName = interviewer ? interviewer.name : "";
   return (
     <main className="appointment__card appointment__card--show">
       <section className="appointment__card-left">

@@ -21,12 +21,22 @@ npm test
 ```sh
 npm run storybook
 ```
+
+## Running The Server API
+
+Running the server normally
+```sh
+npm start
+```
+
+Running the server so it returns an error when saving/deleting for testing the client's error handling capabilities
+```sh
+npm run error
+```
+ 
 ## Preview
 ![The Scheduler Show Page](https://github.com/SydannyOpal/Scheduler/blob/master/public/images/Scheduler%20Show%20Page.png?raw=true)
 ![The Appointment Form](https://github.com/SydannyOpal/Scheduler/blob/master/public/images/Scheduler%20Appointment%20Form.png?raw=true)
-
-
-
 
 ## Dependencies
 axios: ^0.27.2,
