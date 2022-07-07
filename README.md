@@ -24,7 +24,7 @@ npm run storybook
 
 ## Running The Server API
 
-https://github.com/SydannyOpal/scheduler-api
+[API Repo](https://github.com/SydannyOpal/scheduler-api)
 
 Running the server normally
 ```sh
@@ -53,4 +53,4 @@ react: ^16.9.0,
 
 react-dom: ^16.9.0,
 
-react-scripts: 3.0.0
+react-scripts: 3.0.0 . 
