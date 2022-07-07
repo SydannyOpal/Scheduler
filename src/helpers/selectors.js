@@ -1,3 +1,4 @@
+// scheduled appointments render
 export function getAppointmentsForDay({days, appointments}, dayName) {
   const day = days.find(day => day.name === dayName);
 
@@ -6,7 +7,7 @@ export function getAppointmentsForDay({days, appointments}, dayName) {
   const appointmentsForDay = day.appointments.map(id => appointments[`${id}`]);
   return appointmentsForDay;
 }
-
+// interviewers available
 export function getInterviewersForDay({days, interviewers}, dayName) {
   const day = days.find(day => day.name === dayName);
 
@@ -15,7 +16,7 @@ export function getInterviewersForDay({days, interviewers}, dayName) {
   const interviewersForDay = day.interviewers.map(id => interviewers[`${id}`]);
   return interviewersForDay;
 }
-
+// render interview form
 export function getInterview({interviewers}, interview) {
   if (!interview) return null;
   

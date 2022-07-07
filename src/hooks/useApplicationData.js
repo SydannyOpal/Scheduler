@@ -23,14 +23,14 @@ export default function useApplicationData() {
       }));
     });
   }, []);
-
+// what are the available spots? updates according to booking stays same when edited
 const updateSpots = (appointments) => {
  const selectedDay = state.days.find(day => day.name === state.day)
  const appointmentSlots = selectedDay.appointments.map(appointmentId => appointments[appointmentId].interview)
  const spotsRemaining = appointmentSlots.filter(appointment => appointment === null).length
  selectedDay.spots = spotsRemaining;
 }
-
+// add a new appointment
   const bookInterview = (appointmentId, interview) => {
     const appointment = {
       ...state.appointments[appointmentId],
@@ -49,7 +49,7 @@ const updateSpots = (appointments) => {
         setState({ ...state, appointments, days: [...state.days] });
       });
   };
-
+// removes appoitment from schedule
   const cancelInterview = (appointmentId) => {
     const appointment = state.appointments[appointmentId];
     appointment.interview = null;

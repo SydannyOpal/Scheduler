@@ -3,7 +3,7 @@ import { useState } from "react";
 export default function useVisualMode(initialMode) {
   const [mode, setMode] = useState(initialMode);
   const [history, setHistory] = useState([initialMode]);
-
+// controls the flow between appointment form views 
   const transition = (newMode, shouldReplaceCurrentMode = false) => {
     setMode(newMode);
 
