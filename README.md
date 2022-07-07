@@ -24,6 +24,8 @@ npm run storybook
 
 ## Running The Server API
 
+https://github.com/SydannyOpal/scheduler-api
+
 Running the server normally
 ```sh
 npm start

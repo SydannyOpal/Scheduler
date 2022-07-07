@@ -42,12 +42,11 @@
     "@storybook/addons": "^5.0.10",
     "@storybook/react": "^5.0.10",
     "@testing-library/jest-dom": "^4.0.0",
-    "@testing-library/react-hooks": "^8.0.7",
+    "@testing-library/react": "^8.0.7",
+    "@testing-library/react-hooks": "^6.0.0",
     "babel-loader": "^8.0.5",
     "node-sass": "npm:sass@^1.52.3",
-    "prop-types": "^15.8.1",
-    "react-hooks-testing-library": "^0.6.0",
-    "react-test-renderer": "^16.9.0"
+    "prop-types": "^15.8.1"
   },
   "jest": {
     "watchPathIgnorePatterns": [
